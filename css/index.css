@@ -113,3 +113,16 @@
   color: #333;
   line-height: 50px;
 }
+.wrap .main {
+  width: 100%;
+}
+.wrap .main .mainCon {
+  width: 1200px;
+  margin: 15px auto 0;
+}
+.wrap .main .mainCon .conPoin {
+  padding: 9px 15px 9px 0;
+}
+.wrap .main .mainCon .conPoin i {
+  color: #ccc;
+}
