@@ -191,14 +191,19 @@
   margin-right: 4px;
 }
 .wrap .main .mainCon .infoWrap .previwWrap .thumbnail .itemWrap {
+  position: relative;
   float: left;
   width: 372px;
   height: 56px;
   overflow: hidden;
 }
 .wrap .main .mainCon .infoWrap .previwWrap .thumbnail .itemWrap ul {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 9999px;
   height: 50px;
+  transition: 0.5s;
 }
 .wrap .main .mainCon .infoWrap .previwWrap .thumbnail .itemWrap ul li {
   width: 50px;

@@ -252,6 +252,58 @@
                 }
             }
         }
+
+        //缩略图
+        thumbnail();
+        function thumbnail() {
+            // 左右按钮
+            var prevNode = document.querySelector('.wrap .main .mainCon .infoWrap .previwWrap .thumbnail a.prev');
+            var nextNode = document.querySelector('.wrap .main .mainCon .infoWrap .previwWrap .thumbnail a.next');
+            // 图片容器 为了控制这个ul的left值
+            var list = document.querySelector('.wrap .main .mainCon .infoWrap .previwWrap .thumbnail .itemWrap ul');
+            // 获取li集合
+            var items = document.querySelectorAll('.wrap .main .mainCon .infoWrap .previwWrap .thumbnail .itemWrap ul li');
+            // 移动图片张数
+            var moveNum = 2;
+            // 定义默认显示张数
+            var showImg = 5;
+            // 每次移动两张小图   计算单次的偏移量
+            // 显示图片的张数 * （图片的宽度 + 一个图片的marginRight）
+            var moveLeft = (items[0].offsetWidth + 20) * moveNum;
+            // 计算一共可以移动的距离  （总张数 - 显示张数） * （图片宽 + marginRight）
+            var countLeft = (items.length - showImg) * (items[0].offsetWidth + 20);
+            // 需要定义一个变量  记录已经移动的距离
+            var tempLeft = 0;
+            // 给next按钮 绑定单击事件
+            nextNode.onclick = function () {
+            // 如果已经走过的距离 小于总共可以走的距离 才能移动
+            if (tempLeft < countLeft) {
+            // 总距离 - 已经移动的距离 = 剩余距离
+            // 每一次的移动 都是用剩余距离和单次偏移左比较  如果剩余距离大于单次偏移 则正常移动 如果不大于 剩多少走多少
+                if (countLeft - tempLeft > moveLeft) {
+                    tempLeft += moveLeft;
+                } else {
+                    // 如果能够进入到这个else当中 说明当前的剩余空间 不够走一个moveLeft 直接走剩余部分
+                    tempLeft = countLeft;
+                }
+                // 需要给list设置left的值为负值  才能够让容器向左移动 看到右侧的图片
+                list.style.left = -tempLeft + 'px';
+            }
+
+            }
+
+            // 给prev按钮绑定单击事件
+            prevNode.onclick = function () {
+                // 点击右侧按钮记录的已经移动的距离 对于prev按钮来说 就是可移动的空间
+                if (tempLeft > moveLeft) {
+                    tempLeft -= moveLeft;
+                } else {
+                    tempLeft = 0;
+                }
+                // list的left值  永远都为赋值 最大为0  如果出现正值  那么ul左侧一定出现留白了 所以不可能
+                list.style.left = -tempLeft + 'px';
+            }
+        }
     }
 </script>
 </html>
