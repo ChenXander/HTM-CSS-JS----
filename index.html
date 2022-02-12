@@ -77,19 +77,52 @@
         <div class="mainCon">
             <!-- 路径导航 -->
             <div class="conPoin">
-                <a href="##">手机、数码、通讯</a>
+                <!-- <a href="##">手机、数码、通讯</a>
                 <i>/</i>
                 <a href="#">手机</a>
                 <i>/</i>
                 <a href="#">Apple苹果</a>
                 <i>/</i>
-                <a>iphone 6S系类</a>
+                <a>iphone 6S系类</a> -->
             </div>
         </div>
     </div>
 </div>
 
-
-
 </body>
+<script src="./js/data.js"></script>
+<script>
+    window.onload = function () {
+
+        // 路径导航
+        conPoin();
+        function conPoin() {
+            // 需要获取数据
+            var path = goodData.path;
+            // 路径导航的父容器
+            var conPoinNode = document.querySelector('.wrap .main .mainCon .conPoin');
+
+            for (let i = 0; i < path.length; i++) {
+                // 数组的长度是多少就需要创建多少个a标签，所以直接在循环最开始的时候创建a标签即可
+                var aNode = document.createElement('a');
+
+                // 判断是否是最后一个路径，如果是不需要设置href属性，不需要创建i标签
+                if (i == path.length - 1) {
+                    // 只要能进入这个if中，说明path[i]一定对应数组当中的最后一个元素的内容
+                    aNode.innerHTML = path[i].title; //在遍历的过程中，使用path这个数组中每一个对象的title属性的值作为a的内容
+                    conPoinNode.appendChild(aNode);
+                } else {
+                    // 如果不是最后一个。我们就需要给a标签设置文本，设置href属性，并且同时创建i标签添加斜线
+                    aNode.innerHTML = path[i].title;
+                    aNode.href = path[i].url;
+                    conPoinNode.appendChild(aNode);
+                    var iNode = document.createElement('i');
+                    iNode.innerHTML = '/';
+                    conPoinNode.appendChild(iNode);
+                }
+            }
+        }
+
+    }
+</script>
 </html>

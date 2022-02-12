@@ -124,5 +124,6 @@
   padding: 9px 15px 9px 0;
 }
 .wrap .main .mainCon .conPoin i {
+  margin: 0 2px;
   color: #ccc;
 }
