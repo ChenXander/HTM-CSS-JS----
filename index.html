@@ -163,6 +163,55 @@
             }
         }
 
+        // 放大镜
+        previw();
+        function previw() {
+            // 放大镜父容器
+            var previwNode = document.querySelector('.wrap .main .mainCon .infoWrap .previwWrap .previw');
+            // 小图容器
+            var zoomImgBox = document.querySelector('.wrap .main .mainCon .infoWrap .previwWrap .previw .zoomImgBox');
+            // 创建蒙版
+            var maskNode = null;
+            // 创建大图
+            var bigImg = null;
+            // 大图容器
+            var bigImgBox = null;
+
+            // 当鼠标移入时 创建蒙版 大图容器 大图
+            previwNode.onmouseenter = function () {
+                if (!maskNode) {
+                    // 创建蒙版
+                    maskNode = document.createElement('div');
+                    maskNode.className = 'mask';
+                    zoomImgBox.appendChild(maskNode);
+                    // 创建大图容器
+                    bigImgBox = document.createElement('div');
+                    bigImgBox.className = 'bigImgBox';
+                    previwNode.appendChild(bigImgBox);
+                    // 创建大图
+                    bigImg = new Image(); //等价bigImg = document.createElement('img');
+                    bigImg.src = './images/b1.png';
+                    bigImgBox.appendChild(bigImg);
+                }
+
+                // 当移入放大器区域时，才需要绑定move事件
+                zoomImgBox.onmousemove = function () {
+
+                }
+                // 当鼠标离开放大镜区域时，移除move事件和leave事件，并且删除蒙版 大图容器 大图
+                previwNode.onmouseleave = function () {
+                    zoomImgBox.removeChild(maskNode);
+                    previwNode.removeChild(bigImgBox);
+                    // 删除元素后需要重置元素变量为空的状态
+                    maskNode = null; //实际只需要重置maskNode，因为if判断条件依据maskNode
+                    bigImgBox = null;
+                    bigImg = null;
+
+                    zoomImgBox.onmousemove = null;
+                    previwNode.onmouseleave = null;
+                }
+            }
+        }
     }
 </script>
 </html>
