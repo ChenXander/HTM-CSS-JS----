@@ -94,7 +94,7 @@
                         <!-- 小图容器 -->
                         <div class="zoomImgBox">
                             <!-- 小图 -->
-                            <img src="./images/s1.png" alt="">
+                            <!-- <img src="./images/s1.png" alt=""> -->
                             <!-- 蒙版 -->
                         </div>
                         <!-- 大图容器 -->
@@ -106,7 +106,7 @@
                         <!-- 图片显示区域 -->
                         <div class="itemWrap">
                             <ul>
-                                <li><img src="./images/s1.png" alt=""></li>
+                                <!-- <li><img src="./images/s1.png" alt=""></li>
                                 <li><img src="./images/s2.png" alt=""></li>
                                 <li><img src="./images/s3.png" alt=""></li>
                                 <li><img src="./images/s1.png" alt=""></li>
@@ -117,7 +117,7 @@
                                 <li><img src="./images/s3.png" alt=""></li>
                                 <li><img src="./images/s1.png" alt=""></li>
                                 <li><img src="./images/s2.png" alt=""></li>
-                                <li><img src="./images/s3.png" alt=""></li>
+                                <li><img src="./images/s3.png" alt=""></li> -->
                             </ul>
                         </div>
                         <a href="javascript:;" class="next">&gt;</a>
@@ -133,6 +133,8 @@
 <script src="./js/data.js"></script>
 <script>
     window.onload = function () {
+        // 放大镜 大图路径索引
+        var previwID = 0;
 
         // 路径导航
         conPoin();
@@ -176,6 +178,12 @@
             var bigImg = null;
             // 大图容器
             var bigImgBox = null;
+            // 小图动态渲染
+            var imagessrc = goodData.imagessrc;
+            var smallImg = document.createElement('img');
+            // 小图默认 应该使用缩略图的第一张来当做图片的路径
+            smallImg.src = imagessrc[0].s;
+            zoomImgBox.appendChild(smallImg);
 
             // 当鼠标移入时 创建蒙版 大图容器 大图
             previwNode.onmouseenter = function () {
@@ -190,7 +198,8 @@
                     previwNode.appendChild(bigImgBox);
                     // 创建大图
                     bigImg = new Image(); //等价bigImg = document.createElement('img');
-                    bigImg.src = './images/b1.png';
+                    // bigImg.src = './images/b1.png';
+                    bigImg.src = imagessrc[previwID].b;
                     bigImgBox.appendChild(bigImg);
                 }
 
@@ -261,6 +270,19 @@
             var nextNode = document.querySelector('.wrap .main .mainCon .infoWrap .previwWrap .thumbnail a.next');
             // 图片容器 为了控制这个ul的left值
             var list = document.querySelector('.wrap .main .mainCon .infoWrap .previwWrap .thumbnail .itemWrap ul');
+            // 缩略图动态渲染
+            // 获取图片数据
+            var imagessrc = goodData.imagessrc;
+
+            imagessrc.forEach(item => {
+                // 当前这个数组有多少个元素（长度）就要创建多少个li并且在每一个li当中添加一张图片
+                // 图片的链接 就是 当前数组当中每一个对象的s属性的值(item.s)
+                var liNode = document.createElement('li');
+                var imgNode = document.createElement('img');
+                imgNode.src = item.s;
+                liNode.appendChild(imgNode);
+                list.appendChild(liNode);
+            });
             // 获取li集合
             var items = document.querySelectorAll('.wrap .main .mainCon .infoWrap .previwWrap .thumbnail .itemWrap ul li');
             // 移动图片张数
@@ -302,6 +324,27 @@
                 }
                 // list的left值  永远都为赋值 最大为0  如果出现正值  那么ul左侧一定出现留白了 所以不可能
                 list.style.left = -tempLeft + 'px';
+            }
+        }
+
+        // 缩略图点击功能
+        thumbnailClick();
+        function thumbnailClick() {
+            // 获取缩略图中li 的集合
+            var items = document.querySelectorAll('.wrap .main .mainCon .infoWrap .previwWrap .thumbnail .itemWrap ul li');
+            var imagessrc = goodData.imagessrc;
+            // 获取小图
+            var smallImg = document.querySelector('.wrap .main .mainCon .infoWrap .previwWrap .previw .zoomImgBox img');
+            for (let i = 0; i < items.length; i++) {
+                items[i].index = i;
+                // 增加索引  是为了在点击事件中 判断当前点击的li的索引
+                // 然后去数组中找到这个索引对应的那个对象  然后把这个对象的s属性对应的链接 设置给小图
+                items[i].onclick = function () {
+                    var imgSrc = imagessrc[this.index].s;
+                    smallImg.src = imgSrc;
+                    // 在当前这个位置 不能直接操作大图 原因是当点击缩略图时  大图元素一定是不存在的
+                    previwID = this.index;
+                }
             }
         }
     }
