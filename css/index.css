@@ -1,0 +1,81 @@
+.wrap .header {
+  width: 100%;
+}
+.wrap .header .top {
+  width: 100%;
+  height: 30px;
+  background: #eaeaea;
+}
+.wrap .header .top .topMain {
+  margin: 0 auto;
+  width: 1200px;
+  height: 30px;
+  line-height: 30px;
+}
+.wrap .header .top .topMain .login {
+  float: left;
+  width: 200px;
+  height: 30px;
+}
+.wrap .header .top .topMain .login p {
+  float: left;
+  line-height: 30px;
+}
+.wrap .header .top .topMain .login p a {
+  line-height: 32px;
+}
+.wrap .header .top .topMain .login .btn1 {
+  margin-left: 3px;
+}
+.wrap .header .top .topMain .topNav {
+  float: right;
+  height: 30px;
+}
+.wrap .header .top .topMain .topNav a {
+  padding: 0 10px;
+}
+.wrap .header .top .topMain .topNav a + a {
+  border-left: 1px solid #b3aeae;
+}
+.wrap .header .bottom .bottomMain {
+  margin: 0 auto;
+  width: 1200px;
+  *zoom: 1;
+}
+.wrap .header .bottom .bottomMain::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.wrap .header .bottom .bottomMain .logo {
+  float: left;
+  margin: 25px 45px;
+}
+.wrap .header .bottom .bottomMain .logo img {
+  width: 175px;
+  height: 56px;
+}
+.wrap .header .bottom .bottomMain .search {
+  float: right;
+  margin-top: 35px;
+}
+.wrap .header .bottom .bottomMain .search input {
+  float: left;
+  width: 490px;
+  height: 32px;
+  box-sizing: border-box;
+  padding: 0 4px;
+  border: 2px solid #ea4a36;
+  outline: none;
+}
+.wrap .header .bottom .bottomMain .search button {
+  float: left;
+  width: 68px;
+  height: 32px;
+  text-align: 32px;
+  text-align: center;
+  background: #ea4a36;
+  color: #fff;
+  border: none;
+  outline: none;
+}
