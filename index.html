@@ -195,7 +195,47 @@
                 }
 
                 // 当移入放大器区域时，才需要绑定move事件
-                zoomImgBox.onmousemove = function () {
+                zoomImgBox.onmousemove = function (event) {
+                    // 高版本浏览器会将事件对象作为事件回调函数的第一个形参传递给我们使用
+                    // 但是低版本浏览器不行 是将事件对象作为window的一个属性存在的
+                    event = event || window.event;
+                    // 根据当前鼠标的坐标来修改蒙版的位置
+                    /* 鼠标的位置是不能通过代码所修改，所以让蒙版的正中心和鼠标重合只能通过修改蒙版的位置，
+                    修正值为自身宽高的一半，即可让蒙版中心和鼠标重合 */
+                    // getBoundingClientRect() 是获取一个元素相对于视口的位置最干净的方式
+                    // 鼠标距离视口左侧的值 - 父容器距离视口的值 -蒙版元素宽度的一半
+                    var maskPosition = {
+                        left: event.clientX - previwNode.getBoundingClientRect().left - maskNode.offsetWidth / 2,
+                        top: event.clientY - previwNode.getBoundingClientRect().top - maskNode.offsetHeight / 2
+                    }
+
+                    // 蒙版的边界值判断
+                    // 大于最大值等于最大值  小于最小值等于最小值  常用于范围限定类
+                    // 大于最大值等于最小值  小于最小值等于最大值  常用于轮播图首尾相接
+                    if (maskPosition.left < 0) {
+                        maskPosition.left = 0;
+                    } else if (maskPosition.left > previwNode.clientWidth - maskNode.offsetWidth) {
+                        maskPosition.left = previwNode.clientWidth - maskNode.offsetWidth;
+                    }
+                    if (maskPosition.top < 0) {
+                        maskPosition.top = 0;
+                    } else if (maskPosition.top > previwNode.clientWidth - maskNode.offsetHeight) {
+                        maskPosition.top = previwNode.clientWidth - maskNode.offsetHeight;
+                    }
+
+                    // 修改蒙版的位置
+                    maskNode.style.left = maskPosition.left + 'px';
+                    maskNode.style.top = maskPosition.top + 'px';
+                    // 根据蒙版的位置 来计算大图的位置
+                    // 计算比例  蒙版可移动空间 / 大图可移动空间
+                    var scale = (previwNode.clientWidth - maskNode.offsetWidth) / (bigImg.offsetWidth - bigImgBox.clientWidth);
+                    var bigImgPosition = {
+                        left: maskPosition.left / scale,
+                        top: maskPosition.top / scale
+                    }
+
+                    bigImg.style.marginLeft = -bigImgPosition.left + 'px';
+                    bigImg.style.marginTop = -bigImgPosition.top + 'px';
 
                 }
                 // 当鼠标离开放大镜区域时，移除move事件和leave事件，并且删除蒙版 大图容器 大图
