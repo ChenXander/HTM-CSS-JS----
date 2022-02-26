@@ -38,6 +38,8 @@ function getUserInfo() {
       // 调用renderAvatar渲染用户头像
       renderAvatar(res.data);
     },
+
+
   });
 }
 // 渲染用户头像
