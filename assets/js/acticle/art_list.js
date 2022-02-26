@@ -68,4 +68,17 @@ $(function () {
       },
     });
   }
+
+//   为删选表单绑定submit事件
+  $('#form-search').on('submit', function(e){
+    e.preventDefault()
+    // 获取表单中选中项的值
+    var cate_id = $('[name = cate_id]').val()
+    var state = $('[name = state]').val()
+    // 为查询参数对象q中的对应的属性赋值
+    q.cate_id = cate_id
+    q.state = state
+    // 根据最新的筛选条件，重新渲染表格的数据
+    initTable()
+  })
 });
